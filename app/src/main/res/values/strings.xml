@@ -1,7 +1,4 @@
 <resources>
     <string name="app_name">GameNews</string>
-
-    <string name="bid">BID</string>
-    <string name="ask">ASK</string>
-    <string name="avg">AVG</string>
+    <string name="news">News</string>
 </resources>

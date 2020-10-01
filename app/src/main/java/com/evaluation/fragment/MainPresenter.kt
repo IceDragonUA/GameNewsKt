@@ -1,13 +1,10 @@
 package com.evaluation.fragment
 
-import androidx.work.WorkManager
 import com.evaluation.event.Event
 import com.evaluation.event.bus.DomainBus
-import com.evaluation.model.retrofit.NewsItem
 import com.evaluation.model.room.NewsTableItem
 import com.evaluation.presenter.BasePresenterImpl
 import com.evaluation.repository.MainRepository
-import com.evaluation.worker.sync.SyncWorkHelper.Companion.UPDATE_APP_WORK
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import timber.log.Timber
@@ -28,7 +25,8 @@ class MainPresenter @Inject constructor(
     }
 
     override fun provideData() {
-        compositeDisposable.add(
+        compositeDisposable.addAll(
+            provideList(),
             provideUpdater()
         )
     }

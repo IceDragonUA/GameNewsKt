@@ -55,9 +55,13 @@ class MainFragment : Fragment(), MainContract.View {
         adapter.mNewsList = newsItem
     }
 
-    override fun showLoading() {}
+    override fun showLoading() {
+        progressSpinner.visibility = View.VISIBLE
+    }
 
-    override fun hideLoading() {}
+    override fun hideLoading() {
+        progressSpinner.visibility = View.GONE
+    }
 
     override fun onDestroyView() {
         presenter.end()

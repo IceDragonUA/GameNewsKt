@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.evaluation.R
 import com.evaluation.adapter.CustomListAdapter.ListAdapterHolder
 import com.evaluation.model.room.NewsTableItem
-import kotlinx.android.synthetic.main.list_item.view.*
+import com.evaluation.utils.loadFromUrl
+import kotlinx.android.synthetic.main.item_content.view.*
 import kotlin.properties.Delegates
 
 class CustomListAdapter : RecyclerView.Adapter<ListAdapterHolder>() {
@@ -34,7 +35,10 @@ class CustomListAdapter : RecyclerView.Adapter<ListAdapterHolder>() {
     class ListAdapterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(newsItem: NewsTableItem) {
-            itemView.name.text = newsItem.title
+            itemView.image.loadFromUrl(newsItem.img)
+            itemView.title.text = newsItem.title
+            itemView.site.text = newsItem.click_url
+            itemView.time.text = newsItem.time
         }
     }
 }

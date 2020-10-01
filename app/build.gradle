@@ -46,13 +46,15 @@ dependencies {
     implementation dep.lifeCycle
     implementation dep.legacySupport
 
+    // CardView
+    implementation dep.cardView
+
     // RecyclerView
     implementation dep.recyclerView
 
     // Glide
     implementation dep.glide
-    implementation dep.glideAnnotations
-    annotationProcessor dep.glideCompiler
+    kapt dep.glideCompiler
 
     // Dagger
     implementation dep.dagger

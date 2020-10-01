@@ -5,4 +5,18 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="CardText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/card_text_margin</item>
+        <item name="android:layout_marginLeft">@dimen/card_text_padding</item>
+        <item name="android:layout_marginRight">@dimen/card_text_padding</item>
+    </style>
+
+    <style name="ComponentProgress" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:indeterminateDrawable">@drawable/progress_component</item>
+    </style>
+
 </resources>

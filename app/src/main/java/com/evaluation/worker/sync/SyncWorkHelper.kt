@@ -24,19 +24,21 @@ class SyncWorkHelper @Inject constructor(private val context: Context) : SyncSch
 
     override fun startSchedule(period: Long, timeUnit: TimeUnit) {
         val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
         val updateMenuWork = PeriodicWorkRequest.Builder(UpdateWorker::class.java, period, timeUnit)
-                .setInitialDelay(period, timeUnit)
-                .setConstraints(constraints)
-                .setBackoffCriteria(BackoffPolicy.LINEAR,
-                    BACKOFF_DELAY_SECONDS, TimeUnit.SECONDS)
-                .addTag(UPDATE_APP_WORK)
-                .build()
+            .setInitialDelay(period / 2, timeUnit)
+            .setConstraints(constraints)
+            .setBackoffCriteria(
+                BackoffPolicy.LINEAR,
+                BACKOFF_DELAY_SECONDS, TimeUnit.SECONDS
+            )
+            .addTag(UPDATE_APP_WORK)
+            .build()
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             UPDATE_APP_PERIODIC,
-                ExistingPeriodicWorkPolicy.REPLACE,
-                updateMenuWork
+            ExistingPeriodicWorkPolicy.REPLACE,
+            updateMenuWork
         )
     }
 
