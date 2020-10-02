@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import com.evaluation.App
 import com.evaluation.R
 import com.evaluation.adapter.CustomListAdapter
 import com.evaluation.model.room.NewsTableItem
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_layout.*
 import javax.inject.Inject
 
@@ -34,11 +36,7 @@ class MainFragment : Fragment(), MainContract.View {
         App.mainComponent?.inject(this)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.main_layout, container, false)
     }
 
@@ -56,7 +54,7 @@ class MainFragment : Fragment(), MainContract.View {
 
     private fun initToolBar() {
         toolBar.setNavigationOnClickListener {
-            // Handle navigation icon press
+            activity?.drawer?.openDrawer(GravityCompat.START)
         }
 
         toolBar.setOnMenuItemClickListener {

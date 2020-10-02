@@ -42,6 +42,7 @@ dependencies {
 
     implementation dep.appCompat
     implementation dep.material
+    implementation dep.fragment
     implementation dep.ktxCore
 
     implementation dep.lifeCycle
