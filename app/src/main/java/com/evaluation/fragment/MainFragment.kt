@@ -5,13 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.evaluation.App
 import com.evaluation.R
 import com.evaluation.adapter.CustomListAdapter
-import com.evaluation.model.retrofit.NewsItem
 import com.evaluation.model.room.NewsTableItem
 import kotlinx.android.synthetic.main.main_layout.*
 import javax.inject.Inject
@@ -45,6 +46,41 @@ class MainFragment : Fragment(), MainContract.View {
     }
 
     private fun initView() {
+        initToolBar()
+        initList()
+    }
+
+    private fun initToolBar() {
+        toolBar.inflateMenu(R.menu.menu)
+
+        toolBar.setNavigationOnClickListener {
+            // Handle navigation icon press
+        }
+
+        toolBar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.search -> {
+                    val searchView = item.actionView as SearchView
+                    searchView.queryHint = getString(R.string.search)
+                    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                        override fun onQueryTextSubmit(query: String?): Boolean {
+                            Toast.makeText(context, query, Toast.LENGTH_SHORT).show()
+                            return false
+                        }
+
+                        override fun onQueryTextChange(newText: String?): Boolean {
+                            Toast.makeText(context, newText, Toast.LENGTH_SHORT).show()
+                            return false
+                        }
+
+                    })
+                }
+            }
+            true
+        }
+    }
+
+    private fun initList() {
         adapter = CustomListAdapter()
         listView.layoutManager = LinearLayoutManager(context)
         listView.itemAnimator = DefaultItemAnimator()

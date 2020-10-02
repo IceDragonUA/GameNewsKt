@@ -6,7 +6,6 @@
     <dimen name="card_text_margin">21dp</dimen>
     <dimen name="card_text_padding">15dp</dimen>
 
-    <dimen name="card_title_text_size">27sp</dimen>
     <dimen name="card_site_text_size">12sp</dimen>
     <dimen name="card_time_text_size">12sp</dimen>
 

@@ -19,4 +19,10 @@
         <item name="android:indeterminateDrawable">@drawable/progress_component</item>
     </style>
 
+    <style name="ComponentToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/colorLightBlack</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+
 </resources>
