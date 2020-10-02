@@ -10,10 +10,15 @@ class DomainBus @Inject constructor() {
 
     private fun createPublisher (): PublishSubject<Event> = PublishSubject.create()
 
+    private var word: String? = null
+
     private val publisher = createPublisher()
 
-    fun publisher() = publisher
+    fun publisher(word: String?): PublishSubject<Event> {
+        this.word = word
+        return publisher
+    }
 
-    fun updated() = publisher.onNext(Event())
+    fun updated() = publisher.onNext(Event(word))
 
 }

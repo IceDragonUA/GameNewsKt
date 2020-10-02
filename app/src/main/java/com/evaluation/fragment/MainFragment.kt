@@ -3,9 +3,9 @@ package com.evaluation.fragment
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -34,7 +34,11 @@ class MainFragment : Fragment(), MainContract.View {
         App.mainComponent?.inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.main_layout, container, false)
     }
 
@@ -51,32 +55,41 @@ class MainFragment : Fragment(), MainContract.View {
     }
 
     private fun initToolBar() {
-        toolBar.inflateMenu(R.menu.menu)
-
         toolBar.setNavigationOnClickListener {
             // Handle navigation icon press
         }
 
-        toolBar.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
+        toolBar.setOnMenuItemClickListener {
+            when (it.itemId) {
                 R.id.search -> {
-                    val searchView = item.actionView as SearchView
+                    val searchView = it.actionView as SearchView
                     searchView.queryHint = getString(R.string.search)
                     searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                         override fun onQueryTextSubmit(query: String?): Boolean {
-                            Toast.makeText(context, query, Toast.LENGTH_SHORT).show()
                             return false
                         }
 
                         override fun onQueryTextChange(newText: String?): Boolean {
-                            Toast.makeText(context, newText, Toast.LENGTH_SHORT).show()
+                            presenter.provideData(newText)
                             return false
                         }
 
                     })
+                    it.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+                        override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                            return true
+                        }
+
+                        override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                            presenter.provideData()
+                            return true
+                        }
+
+                    })
+                    true
                 }
+                else -> false
             }
-            true
         }
     }
 

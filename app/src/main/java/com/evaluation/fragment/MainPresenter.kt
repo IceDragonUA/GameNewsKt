@@ -24,22 +24,23 @@ class MainPresenter @Inject constructor(
         repository.syncData(UPDATE_INTERVAL)
     }
 
-    override fun provideData() {
+    override fun provideData(word: String?) {
+        compositeDisposable.clear()
         compositeDisposable.addAll(
-            provideList(),
-            provideUpdater()
+            provideList(word),
+            provideUpdater(word)
         )
     }
 
-    private fun provideUpdater(): Disposable {
-        return updateBus.publisher()
+    private fun provideUpdater(word: String?): Disposable {
+        return updateBus.publisher(word)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(::onUpdateSuccess, ::onUpdateError)
     }
 
-    private fun provideList(): Disposable {
+    private fun provideList(word: String?): Disposable {
         return repository
-            .newsList()
+            .newsList(word)
             .doOnSubscribe { view?.showLoading() }
             .subscribe(::onLoadingSuccess, ::onLoadingError)
     }
@@ -56,7 +57,7 @@ class MainPresenter @Inject constructor(
 
     private fun onUpdateSuccess(event: Event) {
         compositeDisposable.add(
-            provideList()
+            provideList(event.word)
         )
     }
 

@@ -18,7 +18,7 @@ interface MainContract {
 
     interface Presenter : BasePresenter<View> {
 
-        fun provideData()
+        fun provideData(word: String? = null)
 
     }
 }

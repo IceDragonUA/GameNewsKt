@@ -1,3 +1,3 @@
 package com.evaluation.event
 
-open class Event
+data class Event(val word: String?)

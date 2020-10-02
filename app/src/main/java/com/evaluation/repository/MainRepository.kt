@@ -9,7 +9,7 @@ import io.reactivex.Single
  */
 interface MainRepository {
 
-    fun newsList(): Single<List<NewsTableItem>>
+    fun newsList(word: String?): Single<List<NewsTableItem>>
 
     fun syncData(intervalMinutes: Int)
 

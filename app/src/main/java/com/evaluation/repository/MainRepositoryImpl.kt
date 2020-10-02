@@ -1,16 +1,13 @@
 package com.evaluation.repository
 
 import com.evaluation.mapper.NewsMapper
-import com.evaluation.model.retrofit.NewsItem
 import com.evaluation.model.room.NewsTableItem
 import com.evaluation.network.RestAdapter
 import com.evaluation.room.dao.AppDao
 import com.evaluation.worker.scheduler.SyncScheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -26,7 +23,7 @@ class MainRepositoryImpl @Inject constructor(
     private val syncScheduler: SyncScheduler
 ) : MainRepository {
 
-    override fun newsList(): Single<List<NewsTableItem>> {
+    override fun newsList(word: String?): Single<List<NewsTableItem>> {
         return appRest.api.newsList()
             .map {
                 appDao.deleteNewsList()
@@ -35,10 +32,16 @@ class MainRepositoryImpl @Inject constructor(
                 }
             }
             .flatMap {
-                appDao.newsList()
+                if (word == null)
+                    appDao.newsList() else
+                    appDao.newsFilterList(word)
             }
             .onErrorResumeNext {
-                appDao.newsList()
+                val list =
+                    if (word == null)
+                        appDao.newsList() else
+                        appDao.newsFilterList(word)
+                list
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
             }

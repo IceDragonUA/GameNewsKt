@@ -11,8 +11,11 @@ import io.reactivex.Single
 @Dao
 interface AppDao {
 
-    @Query("SELECT * FROM news LIMIT 5")
+    @Query("SELECT * FROM news")
     fun newsList(): Single<List<NewsTableItem>>
+
+    @Query("SELECT * FROM news WHERE title LIKE '%' || :title || '%'")
+    fun newsFilterList(title: String): Single<List<NewsTableItem>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertNews(newsList: NewsTableItem)
