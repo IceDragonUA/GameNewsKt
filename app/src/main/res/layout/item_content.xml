@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/card_text_margin"
-    tools:showIn="@layout/list_item">
+    tools:showIn="@layout/news_card_item">
 
     <ImageView
         android:id="@+id/image"

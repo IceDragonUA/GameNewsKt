@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.evaluation.adapter.CustomListAdapter
+import com.evaluation.adapter.factory.TypesFactoryImpl
 
 /**
  * @author Vladyslav Havrylenko
@@ -20,7 +21,7 @@ class CustomRecyclerView : RecyclerView {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         layoutManager = LinearLayoutManager(context)
         itemAnimator = DefaultItemAnimator()
-        adapter = CustomListAdapter()
+        adapter = CustomListAdapter(TypesFactoryImpl())
     }
 
     override fun getAdapter(): CustomListAdapter =

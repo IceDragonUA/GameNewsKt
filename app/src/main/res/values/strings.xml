@@ -21,4 +21,6 @@
         <item>favourites</item>
     </string-array>
 
+    <string name="result">No results</string>
+
 </resources>

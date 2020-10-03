@@ -1,44 +1,30 @@
 package com.evaluation.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.evaluation.R
-import com.evaluation.adapter.CustomListAdapter.ListAdapterHolder
-import com.evaluation.model.room.NewsTableItem
-import com.evaluation.utils.loadFromUrl
-import kotlinx.android.synthetic.main.item_content.view.*
+import com.evaluation.adapter.factory.TypesFactory
+import com.evaluation.adapter.viewholders.BaseViewHolder
+import com.evaluation.adapter.viewmodels.BaseViewModel
 import kotlin.properties.Delegates
 
-class CustomListAdapter : RecyclerView.Adapter<ListAdapterHolder>() {
+class CustomListAdapter constructor(private val typeFactory: TypesFactory) : RecyclerView.Adapter<BaseViewHolder<BaseViewModel>>() {
 
-    var newsList: List<NewsTableItem> by Delegates.observable(emptyList()) { _, _, _ ->
+    var items: MutableList<BaseViewModel> by Delegates.observable(mutableListOf()) { _, _, _ ->
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, position: Int): ListAdapterHolder =
-        ListAdapterHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false))
-
-    override fun onBindViewHolder(listAdapterHolder: ListAdapterHolder, position: Int) {
-        listAdapterHolder.bind(getItem(position))
+    @Suppress("UNCHECKED_CAST")
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<BaseViewModel> {
+        return typeFactory.holder(viewType, LayoutInflater.from(parent.context).inflate(viewType, parent, false)) as BaseViewHolder<BaseViewModel>
     }
 
-    private fun getItem(position: Int): NewsTableItem {
-        return newsList[position]
+    override fun onBindViewHolder(holder: BaseViewHolder<BaseViewModel>, position: Int) {
+        holder.bind(items[position])
     }
 
-    override fun getItemCount(): Int {
-        return newsList.size
-    }
+    override fun getItemViewType(position: Int): Int = items[position].type(typeFactory)
 
-    class ListAdapterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    override fun getItemCount(): Int = items.count()
 
-        fun bind(newsItem: NewsTableItem) {
-            itemView.image.loadFromUrl(newsItem.img)
-            itemView.title.text = newsItem.title
-            itemView.site.text = newsItem.click_url
-            itemView.time.text = newsItem.time
-        }
-    }
 }
