@@ -12,7 +12,7 @@ interface MainContract {
 
     interface View : BaseView {
 
-        fun showList(newsItem: List<NewsTableItem>)
+        fun showList(newsItem: Map<String, List<NewsTableItem>>)
 
     }
 

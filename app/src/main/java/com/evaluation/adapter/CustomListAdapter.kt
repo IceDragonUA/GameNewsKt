@@ -13,7 +13,7 @@ import kotlin.properties.Delegates
 
 class CustomListAdapter : RecyclerView.Adapter<ListAdapterHolder>() {
 
-    var mNewsList: List<NewsTableItem> by Delegates.observable(emptyList()) { _, _, _ ->
+    var newsList: List<NewsTableItem> by Delegates.observable(emptyList()) { _, _, _ ->
         notifyDataSetChanged()
     }
 
@@ -25,11 +25,11 @@ class CustomListAdapter : RecyclerView.Adapter<ListAdapterHolder>() {
     }
 
     private fun getItem(position: Int): NewsTableItem {
-        return mNewsList[position]
+        return newsList[position]
     }
 
     override fun getItemCount(): Int {
-        return mNewsList.size
+        return newsList.size
     }
 
     class ListAdapterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

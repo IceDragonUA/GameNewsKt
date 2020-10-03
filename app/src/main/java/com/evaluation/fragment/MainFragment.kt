@@ -9,12 +9,11 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.evaluation.App
 import com.evaluation.R
-import com.evaluation.adapter.CustomListAdapter
+import com.evaluation.adapter.CustomPageAdapter
 import com.evaluation.model.room.NewsTableItem
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_layout.*
 import javax.inject.Inject
@@ -29,7 +28,7 @@ class MainFragment : Fragment(), MainContract.View {
     @Inject
     lateinit var presenter: MainContract.Presenter
 
-    private lateinit var adapter: CustomListAdapter
+    lateinit var adapter: CustomPageAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -49,7 +48,7 @@ class MainFragment : Fragment(), MainContract.View {
 
     private fun initView() {
         initToolBar()
-        initList()
+        initTabBar()
     }
 
     private fun initToolBar() {
@@ -91,15 +90,17 @@ class MainFragment : Fragment(), MainContract.View {
         }
     }
 
-    private fun initList() {
-        adapter = CustomListAdapter()
-        listView.layoutManager = LinearLayoutManager(context)
-        listView.itemAnimator = DefaultItemAnimator()
-        listView.adapter = adapter
+    private fun initTabBar() {
+        val keys = resources.getStringArray(R.array.tabs)
+        adapter = CustomPageAdapter(keys)
+        pagerView.adapter = adapter
+        TabLayoutMediator(tabs, pagerView) { tab, position ->
+            tab.text = keys[position].toUpperCase()
+        }.attach()
     }
 
-    override fun showList(newsItem: List<NewsTableItem>) {
-        adapter.mNewsList = newsItem
+    override fun showList(newsItem: Map<String, List<NewsTableItem>>) {
+        adapter.tabs = newsItem
     }
 
     override fun showLoading() {

@@ -3,6 +3,7 @@
 
     <string name="news">News</string>
     <string name="search">Search</string>
+    <string name="communicate">Communicate</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
@@ -13,5 +14,11 @@
 
     <string name="open">open</string>
     <string name="close">close</string>
+
+    <string-array name="tabs">
+        <item>strories</item>
+        <item>video</item>
+        <item>favourites</item>
+    </string-array>
 
 </resources>

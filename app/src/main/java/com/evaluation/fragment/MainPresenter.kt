@@ -47,7 +47,7 @@ class MainPresenter @Inject constructor(
 
     private fun onLoadingSuccess(list: List<NewsTableItem>) {
         view?.hideLoading()
-        view?.showList(list)
+        view?.showList(list.groupBy { it.type })
     }
 
     private fun onLoadingError(error: Throwable) {
