@@ -6,7 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/card_bottom"
-    android:background="@color/colorWrite"
+    android:background="@color/colorBlack"
     app:cardCornerRadius="@dimen/none">
+
+    <com.evaluation.view.CustomSliderView
+        android:id="@+id/cardsSliderView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </com.google.android.material.card.MaterialCardView>

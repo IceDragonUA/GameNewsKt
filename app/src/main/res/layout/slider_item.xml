@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/sliderImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <View
+        android:id="@+id/sliderShadow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sliderTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/card_text_margin"
+        android:background="@drawable/rounded_corner"
+        android:drawablePadding="@dimen/card_slider_img_padding"
+        android:paddingStart="@dimen/card_slider_img_text_padding"
+        android:paddingLeft="@dimen/card_slider_img_text_padding"
+        android:paddingTop="@dimen/card_slider_text_padding"
+        android:paddingEnd="@dimen/card_text_padding"
+        android:paddingRight="@dimen/card_text_padding"
+        android:paddingBottom="@dimen/card_slider_text_padding"
+        android:text="@string/top"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/card_top_text_size"
+        app:drawableLeftCompat="@drawable/fire"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sliderTitle"
+        style="@style/CardText"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:textColor="@color/colorWrite"
+        android:textSize="@dimen/card_title_text_size"
+        app:layout_constraintBottom_toTopOf="@id/sliderSite"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/sliderSite"
+        style="@style/CardText"
+        android:layout_marginBottom="@dimen/card_text_margin"
+        android:textColor="@color/colorLightBlue"
+        android:textSize="@dimen/card_site_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/sliderTime"
+        style="@style/CardText"
+        android:textColor="@color/colorGrey"
+        android:textSize="@dimen/card_time_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/sliderSite"
+        app:layout_constraintStart_toEndOf="@id/sliderSite" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

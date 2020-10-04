@@ -28,7 +28,7 @@ class CustomPageAdapter(private val keys: Array<String>) : RecyclerView.Adapter<
         CustomPageViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.news_view, parent, false))
 
     override fun onBindViewHolder(holder: CustomPageViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(tabs, getItem(position))
     }
 
     private fun getItem(position: Int): List<NewsTableItem>? {
@@ -41,18 +41,36 @@ class CustomPageAdapter(private val keys: Array<String>) : RecyclerView.Adapter<
 
     class CustomPageViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: List<NewsTableItem>?) {
+        fun bind(tabs: Map<String, List<NewsTableItem>>, item: List<NewsTableItem>?) {
             val newsList: MutableList<BaseViewModel> = mutableListOf()
-            val topNewsList = item?.filter { it.top.toInt() > 0 && it.img.isNotEmpty() }
+            val topNewsList: MutableList<NewsTableItem> = mutableListOf()
 
-            if (!topNewsList.isNullOrEmpty()) {
-                newsList.add(SliderItemView(topNewsList))
+            // TODO: 04.10.2020 Uncomment when backend provide data
+//            val topNewsList = item?.filter { it.top.toInt() > 0 && it.img.isNotEmpty() }?.take(SLIDE_LIMIT)
+//
+//            if (!topNewsList.isNullOrEmpty()) {
+//                newsList.add(SliderItemView(topNewsList))
+//            }
+
+            // TODO: 04.10.2020 Remove when backend provide data
+            ArrayList(tabs.values).forEach{
+                it.forEach { newsTableItem ->
+                    topNewsList.add(newsTableItem)
+                }
+            }
+            val sliderList = topNewsList.filter { it.img.isNotEmpty() }.take(SLIDE_LIMIT)
+            if (!sliderList.isNullOrEmpty()) {
+                newsList.add(SliderItemView(sliderList))
             }
 
             item?.forEach { newsList.add(CardItemView(it)) }
             itemView.listView.adapter.items = newsList.ifEmpty {
-                mutableListOf((NoItemView(itemView.context.resources.getString(R.string.result))))
+                mutableListOf(NoItemView(itemView.context.resources.getString(R.string.result)))
             }
+        }
+
+        companion object {
+            const val SLIDE_LIMIT = 5
         }
     }
 }

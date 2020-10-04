@@ -9,5 +9,13 @@
     <dimen name="card_title_text_size">21sp</dimen>
     <dimen name="card_site_text_size">12sp</dimen>
     <dimen name="card_time_text_size">12sp</dimen>
+    <dimen name="card_top_text_size">12sp</dimen>
+
+    <dimen name="card_slider_size">32dp</dimen>
+    <dimen name="card_slider_indicator">5dp</dimen>
+    <dimen name="card_slider_top_radius">14dp</dimen>
+    <dimen name="card_slider_text_padding">5dp</dimen>
+    <dimen name="card_slider_img_text_padding">9dp</dimen>
+    <dimen name="card_slider_img_padding">5dp</dimen>
 
 </resources>
