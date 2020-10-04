@@ -1,6 +1,6 @@
 package com.evaluation.fragment
 
-import com.evaluation.model.room.NewsTableItem
+import com.evaluation.model.NewsTabItem
 import com.evaluation.presenter.BasePresenter
 import com.evaluation.presenter.BaseView
 
@@ -12,7 +12,7 @@ interface MainContract {
 
     interface View : BaseView {
 
-        fun showList(newsItem: Map<String, List<NewsTableItem>>)
+        fun showList(newsItem: List<NewsTabItem>)
 
     }
 

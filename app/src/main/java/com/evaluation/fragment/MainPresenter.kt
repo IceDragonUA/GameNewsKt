@@ -2,6 +2,7 @@ package com.evaluation.fragment
 
 import com.evaluation.event.Event
 import com.evaluation.event.bus.DomainBus
+import com.evaluation.model.NewsTabItem
 import com.evaluation.model.room.NewsTableItem
 import com.evaluation.presenter.BasePresenterImpl
 import com.evaluation.repository.MainRepository
@@ -47,7 +48,7 @@ class MainPresenter @Inject constructor(
 
     private fun onLoadingSuccess(list: List<NewsTableItem>) {
         view?.hideLoading()
-        view?.showList(list.groupBy { it.type })
+        view?.showList(list.groupBy { it.type }.map { NewsTabItem(it.key, it.value) })
     }
 
     private fun onLoadingError(error: Throwable) {

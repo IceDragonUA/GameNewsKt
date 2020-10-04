@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import com.evaluation.App
 import com.evaluation.R
 import com.evaluation.adapter.CustomPageAdapter
-import com.evaluation.model.room.NewsTableItem
+import com.evaluation.model.NewsTabItem
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_layout.*
@@ -99,8 +99,8 @@ class MainFragment : Fragment(), MainContract.View {
         }.attach()
     }
 
-    override fun showList(newsItem: Map<String, List<NewsTableItem>>) {
-        adapter.tabs = newsItem
+    override fun showList(newsItem: List<NewsTabItem>) {
+        adapter.items = newsItem
     }
 
     override fun showLoading() {

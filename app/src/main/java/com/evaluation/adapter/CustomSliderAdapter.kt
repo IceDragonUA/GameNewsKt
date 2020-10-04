@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.evaluation.R
+import com.evaluation.adapter.diffutils.AutoUpdatableAdapter
 import com.evaluation.model.room.NewsTableItem
 import com.evaluation.utils.loadFromUrl
 import kotlinx.android.synthetic.main.slider_item.view.*
@@ -15,10 +16,10 @@ import kotlin.properties.Delegates
  * @author Vladyslav Havrylenko
  * @since 03.10.2020
  */
-class CustomSliderAdapter : RecyclerView.Adapter<CustomSliderAdapter.CustomSliderViewHolder>() {
+class CustomSliderAdapter : RecyclerView.Adapter<CustomSliderAdapter.CustomSliderViewHolder>(), AutoUpdatableAdapter {
 
-    var items: List<NewsTableItem> by Delegates.observable(emptyList()) { _, _, _ ->
-        notifyDataSetChanged()
+    var items: List<NewsTableItem> by Delegates.observable(mutableListOf()) { _, old, new ->
+        autoNotify(old, new) { o, n -> o.hashCode() == n.hashCode() }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomSliderViewHolder =
@@ -28,13 +29,9 @@ class CustomSliderAdapter : RecyclerView.Adapter<CustomSliderAdapter.CustomSlide
         holder.bind(getItem(position))
     }
 
-    private fun getItem(position: Int): NewsTableItem {
-        return items[position]
-    }
+    private fun getItem(position: Int): NewsTableItem = items[position]
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount(): Int = items.count()
 
     class CustomSliderViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

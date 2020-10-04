@@ -5,10 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.evaluation.R
+import com.evaluation.adapter.diffutils.AutoUpdatableAdapter
 import com.evaluation.adapter.viewmodels.BaseViewModel
 import com.evaluation.adapter.viewmodels.item.CardItemView
 import com.evaluation.adapter.viewmodels.item.NoItemView
 import com.evaluation.adapter.viewmodels.item.SliderItemView
+import com.evaluation.model.NewsTabItem
 import com.evaluation.model.room.NewsTableItem
 import kotlinx.android.synthetic.main.news_view.view.*
 import kotlin.properties.Delegates
@@ -18,9 +20,9 @@ import kotlin.properties.Delegates
  * @author Vladyslav Havrylenko
  * @since 03.10.2020
  */
-class CustomPageAdapter(private val keys: Array<String>) : RecyclerView.Adapter<CustomPageAdapter.CustomPageViewHolder>() {
+class CustomPageAdapter(private val keys: Array<String> = emptyArray()) : RecyclerView.Adapter<CustomPageAdapter.CustomPageViewHolder>() {
 
-    var tabs: Map<String, List<NewsTableItem>> by Delegates.observable(emptyMap()) { _, _, _ ->
+    var items: List<NewsTabItem> by Delegates.observable(mutableListOf()) { _, _, _ ->
         notifyDataSetChanged()
     }
 
@@ -28,20 +30,16 @@ class CustomPageAdapter(private val keys: Array<String>) : RecyclerView.Adapter<
         CustomPageViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.news_view, parent, false))
 
     override fun onBindViewHolder(holder: CustomPageViewHolder, position: Int) {
-        holder.bind(tabs, getItem(position))
+        holder.bind(items, getItem(position))
     }
 
-    private fun getItem(position: Int): List<NewsTableItem>? {
-        return tabs[keys[position]]
-    }
+    private fun getItem(position: Int): List<NewsTableItem>? = items.find { it.id == keys[position] }?.news
 
-    override fun getItemCount(): Int {
-        return keys.size
-    }
+    override fun getItemCount(): Int = keys.count()
 
     class CustomPageViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(tabs: Map<String, List<NewsTableItem>>, item: List<NewsTableItem>?) {
+        fun bind(items: List<NewsTabItem>, item: List<NewsTableItem>?) {
             val newsList: MutableList<BaseViewModel> = mutableListOf()
             val topNewsList: MutableList<NewsTableItem> = mutableListOf()
 
@@ -53,8 +51,8 @@ class CustomPageAdapter(private val keys: Array<String>) : RecyclerView.Adapter<
 //            }
 
             // TODO: 04.10.2020 Remove when backend provide data
-            ArrayList(tabs.values).forEach{
-                it.forEach { newsTableItem ->
+            items.forEach{
+                it.news.forEach { newsTableItem ->
                     topNewsList.add(newsTableItem)
                 }
             }
