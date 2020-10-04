@@ -15,6 +15,7 @@
 
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="divider">-</string>
 
     <string-array name="tabs">
         <item>strories</item>

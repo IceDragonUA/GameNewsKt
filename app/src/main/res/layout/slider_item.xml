@@ -66,6 +66,17 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:id="@+id/divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/divider"
+        android:textColor="@color/colorGrey"
+        android:textSize="@dimen/card_site_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/sliderSite"
+        app:layout_constraintEnd_toStartOf="@id/sliderTime"
+        app:layout_constraintStart_toEndOf="@id/sliderSite" />
+
+    <TextView
         android:id="@+id/sliderTime"
         style="@style/CardText"
         android:textColor="@color/colorGrey"
