@@ -13,6 +13,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     defaultConfig {
         minSdkVersion MIN_SDK_VERSION
         targetSdkVersion TARGET_SDK_VERSION
@@ -53,6 +57,9 @@ dependencies {
 
     // RecyclerView
     implementation dep.recyclerView
+
+    // Paging
+    implementation dep.paging
 
     // Glide
     implementation dep.glide

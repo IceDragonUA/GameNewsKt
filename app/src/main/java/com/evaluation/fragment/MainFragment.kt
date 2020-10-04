@@ -67,7 +67,7 @@ class MainFragment : Fragment(), MainContract.View {
                         }
 
                         override fun onQueryTextChange(newText: String?): Boolean {
-                            presenter.provideData(newText)
+                            if (!newText.isNullOrEmpty()) presenter.provideData(newText)
                             return false
                         }
 

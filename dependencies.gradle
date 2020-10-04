@@ -21,6 +21,7 @@ ext {
 
             cardView             : 'androidx.cardview:cardview:1.0.0',
             recyclerView         : 'androidx.recyclerview:recyclerview:1.1.0',
+            paging               : 'androidx.paging:paging-runtime:2.1.2',
 
             glide                : 'com.github.bumptech.glide:glide:4.11.0',
             glideCompiler        : 'com.github.bumptech.glide:compiler:4.11.0',

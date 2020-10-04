@@ -3,7 +3,7 @@ package com.evaluation.adapter.diffutils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
-interface AutoUpdatableAdapter {
+interface NewsDiffUtilCallback {
 
     fun <T> RecyclerView.Adapter<*>.autoNotify(old: List<T>, new: List<T>, compare: (T, T) -> Boolean) {
         val diff = DiffUtil.calculateDiff(object : DiffUtil.Callback() {

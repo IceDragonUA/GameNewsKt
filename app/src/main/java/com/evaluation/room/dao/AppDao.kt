@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.evaluation.model.retrofit.NewsItem
 import com.evaluation.model.room.NewsTableItem
 import io.reactivex.Single
 

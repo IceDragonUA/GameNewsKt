@@ -3,16 +3,15 @@ package com.evaluation.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
 import com.evaluation.R
-import com.evaluation.adapter.diffutils.AutoUpdatableAdapter
-import com.evaluation.adapter.viewmodels.BaseViewModel
-import com.evaluation.adapter.viewmodels.item.CardItemView
-import com.evaluation.adapter.viewmodels.item.NoItemView
-import com.evaluation.adapter.viewmodels.item.SliderItemView
+import com.evaluation.adapter.data.ListDataSource
 import com.evaluation.model.NewsTabItem
 import com.evaluation.model.room.NewsTableItem
+import com.evaluation.utils.MainThreadExecutor
 import kotlinx.android.synthetic.main.news_view.view.*
+import java.util.concurrent.Executors
 import kotlin.properties.Delegates
 
 
@@ -20,7 +19,8 @@ import kotlin.properties.Delegates
  * @author Vladyslav Havrylenko
  * @since 03.10.2020
  */
-class CustomPageAdapter(private val keys: Array<String> = emptyArray()) : RecyclerView.Adapter<CustomPageAdapter.CustomPageViewHolder>() {
+class CustomPageAdapter(private val keys: Array<String> = emptyArray()) :
+    RecyclerView.Adapter<CustomPageAdapter.CustomPageViewHolder>() {
 
     var items: List<NewsTabItem> by Delegates.observable(mutableListOf()) { _, _, _ ->
         notifyDataSetChanged()
@@ -30,45 +30,37 @@ class CustomPageAdapter(private val keys: Array<String> = emptyArray()) : Recycl
         CustomPageViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.news_view, parent, false))
 
     override fun onBindViewHolder(holder: CustomPageViewHolder, position: Int) {
-        holder.bind(items, getItem(position))
+        holder.bind(getItem(position))
     }
 
-    private fun getItem(position: Int): List<NewsTableItem>? = items.find { it.id == keys[position] }?.news
+    private fun getItem(position: Int): List<NewsTableItem>? =
+        items.find { it.id == keys[position] }?.news
 
     override fun getItemCount(): Int = keys.count()
 
     class CustomPageViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(items: List<NewsTabItem>, item: List<NewsTableItem>?) {
-            val newsList: MutableList<BaseViewModel> = mutableListOf()
-            val topNewsList: MutableList<NewsTableItem> = mutableListOf()
+        fun bind(item: List<NewsTableItem>?) {
+            val dataSource = ListDataSource(itemView.context, item)
 
-            // TODO: 04.10.2020 Uncomment when backend provide data
-//            val topNewsList = item?.filter { it.top.toInt() > 0 && it.img.isNotEmpty() }?.take(SLIDE_LIMIT)
-//
-//            if (!topNewsList.isNullOrEmpty()) {
-//                newsList.add(SliderItemView(topNewsList))
-//            }
+            val config = PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setPageSize(PAGE_LIMIT)
+                .build()
 
-            // TODO: 04.10.2020 Remove when backend provide data
-            items.forEach{
-                it.news.forEach { newsTableItem ->
-                    topNewsList.add(newsTableItem)
-                }
-            }
-            val sliderList = topNewsList.filter { it.img.isNotEmpty() }.take(SLIDE_LIMIT)
-            if (!sliderList.isNullOrEmpty()) {
-                newsList.add(SliderItemView(sliderList))
-            }
+            val pagedList = PagedList.Builder(dataSource, config)
+                .setNotifyExecutor(MainThreadExecutor())
+                .setFetchExecutor(Executors.newSingleThreadExecutor())
+                .build()
 
-            item?.forEach { newsList.add(CardItemView(it)) }
-            itemView.listView.adapter.items = newsList.ifEmpty {
-                mutableListOf(NoItemView(itemView.context.resources.getString(R.string.result)))
-            }
+            itemView.listView.scrollToPosition(DEFAULT_POSITION)
+            itemView.listView.adapter.submitList(pagedList)
         }
 
         companion object {
+            const val DEFAULT_POSITION = 0
             const val SLIDE_LIMIT = 5
+            const val PAGE_LIMIT = 5
         }
     }
 }

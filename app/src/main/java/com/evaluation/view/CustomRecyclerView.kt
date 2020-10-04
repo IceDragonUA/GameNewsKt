@@ -20,8 +20,8 @@ class CustomRecyclerView : RecyclerView {
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         layoutManager = LinearLayoutManager(context)
-        itemAnimator = DefaultItemAnimator()
         adapter = CustomListAdapter(TypesFactoryImpl())
+        itemAnimator = null
     }
 
     override fun getAdapter(): CustomListAdapter =

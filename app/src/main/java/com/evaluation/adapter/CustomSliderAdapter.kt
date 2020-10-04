@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.evaluation.R
-import com.evaluation.adapter.diffutils.AutoUpdatableAdapter
+import com.evaluation.adapter.diffutils.NewsDiffUtilCallback
 import com.evaluation.model.room.NewsTableItem
 import com.evaluation.utils.loadFromUrl
 import kotlinx.android.synthetic.main.slider_item.view.*
@@ -16,7 +16,7 @@ import kotlin.properties.Delegates
  * @author Vladyslav Havrylenko
  * @since 03.10.2020
  */
-class CustomSliderAdapter : RecyclerView.Adapter<CustomSliderAdapter.CustomSliderViewHolder>(), AutoUpdatableAdapter {
+class CustomSliderAdapter : RecyclerView.Adapter<CustomSliderAdapter.CustomSliderViewHolder>(), NewsDiffUtilCallback {
 
     var items: List<NewsTableItem> by Delegates.observable(mutableListOf()) { _, old, new ->
         autoNotify(old, new) { o, n -> o.hashCode() == n.hashCode() }
